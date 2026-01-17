@@ -71,7 +71,7 @@ def free_resources(sidekick):
         print(f"Exception during cleanup: {e}")
 
 
-with gr.Blocks(title="Sidekick") as ui:
+with gr.Blocks(title="Sidekick", theme=gr.themes.Default(primary_hue="emerald")) as ui:
     gr.Markdown("## Sidekick Personal Co-worker")
     gr.Markdown("*Enhanced with planning agent, specialized sub-agents, and SQLite persistence*")
 
@@ -79,7 +79,7 @@ with gr.Blocks(title="Sidekick") as ui:
     thread_id = gr.State()
 
     with gr.Row():
-        chatbot = gr.Chatbot(label="Sidekick", height=400)
+        chatbot = gr.Chatbot(label="Sidekick", height=400, type="messages")
 
     with gr.Group():
         with gr.Row():
@@ -120,4 +120,4 @@ with gr.Blocks(title="Sidekick") as ui:
         reset, [], [message, success_criteria, chatbot, sidekick, thread_id]
     )
 
-ui.launch(inbrowser=True, server_port=7862, theme=gr.themes.Default(primary_hue="emerald"))
+ui.launch(inbrowser=True, server_port=7862)

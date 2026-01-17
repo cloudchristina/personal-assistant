@@ -5,16 +5,20 @@ A **multi-agent AI assistant** built with LangGraph and Gradio, featuring specia
 ## Quick Start
 
 ```bash
-# 1. Install dependencies
-uv pip install -r requirements.txt
+# 1. Initialize project and add dependencies
+uv init
+uv add -r requirements.txt
 
-# 2. Install Playwright browser
+# 2. Install dependencies
+uv sync
+
+# 3. Install Playwright browser
 uv run playwright install chromium
 
-# 3. Create .env file with your API keys
+# 4. Create .env file with your API keys
 cp .env.example .env  # Then edit with your keys
 
-# 4. Run
+# 5. Run
 uv run app.py
 ```
 
@@ -60,6 +64,7 @@ uv run app.py
 | `sidekick.py` | Main LangGraph state machine (~640 lines) |
 | `agents.py` | Specialized agent classes with Pydantic outputs |
 | `tools.py` | Tool definitions (search, wiki, files, notifications, browser, sandboxed REPL) |
+| `pyproject.toml` | Project configuration and dependencies |
 | `conversations.sqlite` | SQLite database for persistence |
 | `.gitignore` | Git ignore patterns |
 
@@ -210,18 +215,14 @@ sqlite3 conversations.sqlite "DELETE FROM long_term_memory WHERE id = 1;"
 | Issue | Severity | Location | Status |
 |-------|----------|----------|--------|
 | Hardcoded model | Low | Multiple files | Open |
-| No input validation | Medium | `app.py` | Open |
 | Silent exception swallowing | Medium | Throughout | Open |
 
 ## Completed Fixes
 
-- [x] Add `.gitignore` - Created with proper patterns
 - [x] Sandbox PythonREPLTool - Blocks dangerous operations (`tools.py:21-64`)
-- [x] Pin dependency versions - `requirements.txt` now has version ranges
 - [x] Fix wiki tool name lookup - Case-insensitive matching (`sidekick.py:160`)
 - [x] Fix async cleanup - Proper `asyncio.gather()` (`sidekick.py:667-678`)
 - [x] Fix long-term memory loading - Added to planner (`sidekick.py:185-189`)
-- [x] Add LangSmith tracing - `LANGSMITH_TRACING=true` in `.env`
 - [x] Add metrics tracking table - `metrics` table with `record_metric()` (`sidekick.py:127-137, 645-677`)
 - [x] Add input validation in `app.py` - Null checks, message length limit, error handling (`app.py:21-53`)
 
@@ -245,8 +246,10 @@ sqlite3 conversations.sqlite "DELETE FROM long_term_memory WHERE id = 1;"
 ## Setup
 
 ```bash
-# Install dependencies
-uv pip install -r requirements.txt
+# Initialize project and add dependencies
+uv init
+uv add -r requirements.txt
+uv sync
 
 # Install Playwright browser
 uv run playwright install chromium
