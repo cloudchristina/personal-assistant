@@ -219,15 +219,15 @@ sqlite3 conversations.sqlite "DELETE FROM long_term_memory WHERE id = 1;"
 - [x] Sandbox PythonREPLTool - Blocks dangerous operations (`tools.py:21-64`)
 - [x] Pin dependency versions - `requirements.txt` now has version ranges
 - [x] Fix wiki tool name lookup - Case-insensitive matching (`sidekick.py:160`)
-- [x] Fix async cleanup - Proper `asyncio.gather()` (`sidekick.py:617-638`)
-- [x] Fix long-term memory loading - Added to planner (`sidekick.py:171-175`)
+- [x] Fix async cleanup - Proper `asyncio.gather()` (`sidekick.py:667-678`)
+- [x] Fix long-term memory loading - Added to planner (`sidekick.py:185-189`)
+- [x] Add LangSmith tracing - `LANGSMITH_TRACING=true` in `.env`
+- [x] Add metrics tracking table - `metrics` table with `record_metric()` (`sidekick.py:127-137, 645-677`)
 
 ## Future Improvements
 
 ### P1 - High
 - [ ] Add logging (structlog)
-- [ ] Add LangSmith tracing
-- [ ] Add metrics tracking table
 - [ ] Add input validation in `app.py`
 
 ### P2 - Medium
