@@ -18,13 +18,39 @@ async def setup():
         return None, None
 
 
+MAX_MESSAGE_LENGTH = 10000
+
+
 async def process_message(sidekick, message, success_criteria, history, thread_id):
     """Process a user message through the agent graph."""
-    if not message.strip():
+    # Ensure history is a list
+    if history is None:
+        history = []
+
+    # Check sidekick initialized
+    if sidekick is None:
+        error_msg = {"role": "assistant", "content": "Error: Assistant not initialized. Please refresh the page."}
+        return history + [error_msg], "", sidekick, thread_id
+
+    # Check empty message
+    if not message or not message.strip():
         return history, "", sidekick, thread_id
 
-    results = await sidekick.run_superstep(message, success_criteria, history, thread_id)
-    return results, "", sidekick, thread_id  # Clear message box after sending
+    # Limit message length (prevent token explosion)
+    if len(message) > MAX_MESSAGE_LENGTH:
+        error_msg = {"role": "assistant", "content": f"Error: Message too long ({len(message)} chars). Maximum: {MAX_MESSAGE_LENGTH}"}
+        return history + [error_msg], "", sidekick, thread_id
+
+    # Default success criteria if empty
+    if not success_criteria or not success_criteria.strip():
+        success_criteria = "The answer should be clear and accurate"
+
+    try:
+        results = await sidekick.run_superstep(message, success_criteria, history, thread_id)
+        return results, "", sidekick, thread_id  # Clear message box after sending
+    except Exception as e:
+        error_msg = {"role": "assistant", "content": f"Error processing request: {str(e)}"}
+        return history + [error_msg], "", sidekick, thread_id
 
 
 async def reset():

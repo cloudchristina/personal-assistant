@@ -223,12 +223,12 @@ sqlite3 conversations.sqlite "DELETE FROM long_term_memory WHERE id = 1;"
 - [x] Fix long-term memory loading - Added to planner (`sidekick.py:185-189`)
 - [x] Add LangSmith tracing - `LANGSMITH_TRACING=true` in `.env`
 - [x] Add metrics tracking table - `metrics` table with `record_metric()` (`sidekick.py:127-137, 645-677`)
+- [x] Add input validation in `app.py` - Null checks, message length limit, error handling (`app.py:21-53`)
 
 ## Future Improvements
 
 ### P1 - High
 - [ ] Add logging (structlog)
-- [ ] Add input validation in `app.py`
 
 ### P2 - Medium
 - [ ] Consolidate LLM instances (currently 7 separate)
